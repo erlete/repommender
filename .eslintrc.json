@@ -17,7 +17,8 @@
     "import",
     "@typescript-eslint",
     "jsx-a11y",
-    "prettier"
+    "prettier",
+    "@next/eslint-plugin-next"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -40,7 +41,14 @@
     "react-hooks/exhaustive-deps": "off",
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/interactive-supports-focus": "warn",
-    "prettier/prettier": "warn",
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto",
+        "trailingComma": "es5",
+        "experimentalTernaries": false
+      }
+    ],
     "no-unused-vars": "off",
     "unused-imports/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
