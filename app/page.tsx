@@ -4,7 +4,7 @@ import { Snippet } from "@nextui-org/snippet";
 import { button as buttonStyles } from "@nextui-org/theme";
 
 import { siteConfig } from "@/config/site";
-import { GithubIcon } from "@/components/icons";
+import { GithubLogo } from "@/components/icons/logos";
 import { subtitle, title } from "@/components/primitives";
 
 export default function Home() {
@@ -38,7 +38,7 @@ export default function Home() {
           className={buttonStyles({ variant: "bordered", radius: "full" })}
           href={siteConfig.links.github}
         >
-          <GithubIcon size={20} />
+          <GithubLogo size={20} />
           GitHub
         </Link>
       </div>

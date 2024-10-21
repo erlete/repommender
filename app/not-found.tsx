@@ -1,10 +1,11 @@
+// TODO: Implement not found page (if needed).
 "use client";
 
 import { useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion";
 
-import { BrokenChainIcon } from "@/components/icons/ui";
+import { LookingForIcon } from "@/components/icons/ui";
 
 // TODO: Implement error page (if needed).
 export default function Error({
@@ -31,19 +32,13 @@ export default function Error({
           ease: "easeInOut",
         }}
       >
-        <BrokenChainIcon className="fill-danger" size={128} />
+        <LookingForIcon className="fill-warning" size={128} />
       </motion.div>
       <h2 className="text-center text-2xl font-semibold">
-        Something has broken internally. We&apos;re sorry about it!
+        We could not find the page you&apos;re looking for.
       </h2>
-      <Button
-        variant="ghost"
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Let&apos;s try again
+      <Button variant="ghost" onClick={() => window.history.back()}>
+        Go back
       </Button>
     </div>
   );
