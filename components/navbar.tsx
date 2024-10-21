@@ -14,9 +14,10 @@ import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
 
-import { GithubIcon, Logo, SearchIcon } from "@/components/icons";
+import { GithubLogo, NextLogo } from "@/components/icons/logos";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
+import { SearchIcon } from "@/components/icons/ui";
 
 export const Navbar = () => {
   const searchInput = (
@@ -46,7 +47,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             {/* TODO: Add company name and logo: */}
-            <Logo />
+            <NextLogo />
             <p className="font-bold text-inherit">Company name</p>
           </NextLink>
         </NavbarBrand>
@@ -74,7 +75,7 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
+            <GithubLogo className="text-default-500" />
           </Link>
           <ThemeSwitch />
         </NavbarItem>
@@ -83,7 +84,7 @@ export const Navbar = () => {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
+          <GithubLogo className="text-default-500" />
         </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
