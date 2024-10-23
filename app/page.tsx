@@ -41,61 +41,70 @@ export default function Home() {
             radius: "full",
             variant: "shadow",
           })}
-          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            document.querySelector("#popular-repos")?.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "nearest",
+            });
+          }}
         >
           Explorar repositorios populares
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-4 mt-32">
-        <h2
-          className={title({
-            color: "primary",
-            className: "text-center",
-          })}
-        >
-          Repositorios populares
-        </h2>
+      <div id="popular-repos">
+        <div className="flex flex-col items-center gap-4 mt-32">
+          <h2
+            className={title({
+              color: "primary",
+              className: "text-center",
+            })}
+          >
+            Repositorios populares
+          </h2>
 
-        <Divider />
+          <Divider />
 
-        <Autocomplete
-          label="Filtrar por lenguaje"
-          placeholder="Todos los lenguajes"
-          variant="bordered"
-          onSelectionChange={(value) => {
-            setLanguage(value as string);
-            setClickCount(0);
-          }}
-        >
-          {LANGUAGES.map((item) => (
-            <AutocompleteItem
-              key={item}
-              startContent={
-                <span className="w-6 h-6">{getLanguageLogo(item)}</span>
-              }
-              value={item}
-            >
-              {item}
-            </AutocompleteItem>
-          ))}
-        </Autocomplete>
-
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
-          {REPOSITORIES.filter(
-            (repo) =>
-              language === null ||
-              repo.language.toLowerCase() === language.toLowerCase()
-          )
-            .slice(0, Math.min(12 * (1 + clickCount), REPOSITORIES.length))
-            .map((repo) => (
-              <RepositoryCardLanguage key={repo.index} repo={repo} />
+          <Autocomplete
+            label="Filtrar por lenguaje"
+            placeholder="Todos los lenguajes"
+            variant="bordered"
+            onSelectionChange={(value) => {
+              setLanguage(value as string);
+              setClickCount(0);
+            }}
+          >
+            {LANGUAGES.map((item) => (
+              <AutocompleteItem
+                key={item}
+                startContent={
+                  <span className="w-6 h-6">{getLanguageLogo(item)}</span>
+                }
+                value={item}
+              >
+                {item}
+              </AutocompleteItem>
             ))}
-        </div>
+          </Autocomplete>
 
-        <Button variant="ghost" onPress={() => setClickCount(clickCount + 1)}>
-          Mostrar más
-        </Button>
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+            {REPOSITORIES.filter(
+              (repo) =>
+                language === null ||
+                repo.language.toLowerCase() === language.toLowerCase()
+            )
+              .slice(0, Math.min(12 * (1 + clickCount), REPOSITORIES.length))
+              .map((repo) => (
+                <RepositoryCardLanguage key={repo.index} repo={repo} />
+              ))}
+          </div>
+
+          <Button variant="ghost" onPress={() => setClickCount(clickCount + 1)}>
+            Mostrar más
+          </Button>
+        </div>
       </div>
     </section>
   );
