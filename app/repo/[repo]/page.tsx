@@ -6,6 +6,7 @@ import { Spinner } from "@nextui-org/spinner";
 import { Link } from "@nextui-org/link";
 import { useTheme } from "next-themes";
 import { Image } from "@nextui-org/image";
+import { Divider } from "@nextui-org/divider";
 
 import { REPOSITORIES } from "@/data/repos";
 import { subtitle, title } from "@/components/primitives";
@@ -79,7 +80,7 @@ export default function Page({ params }: { params: { repo: string } }) {
   return (
     <section className="flex flex-col items-center justify-center gap-4">
       <div className="grid grid-cols-8 gap-4">
-        <div className="col-span-6 max-w-4xl text-center flex flex-col items-center justify-center gap-2">
+        <div className="col-span-6 max-w-4xl text-center flex flex-col items-center justify-start gap-2">
           <div className="grid grid-cols-5 bg-default-100 rounded-xl">
             <div className="flex items-center justify-evenly col-span-1 p-4">
               {LOGOS[selectedRepo.language.toLowerCase() as keyof typeof LOGOS]}
@@ -88,7 +89,6 @@ export default function Page({ params }: { params: { repo: string } }) {
             <div className="flex flex-col items-center justify-center max-w-xl col-start-2 col-span-3">
               <Link
                 isExternal
-                className="[&>h1]:py-2"
                 href={`https://github.com/${selectedRepo.fullName}`}
               >
                 <h1 className={title()}>{selectedRepo.name}</h1>
@@ -96,7 +96,7 @@ export default function Page({ params }: { params: { repo: string } }) {
 
               <h2
                 className={subtitle({
-                  class: "text-2xl italic",
+                  class: "text-2xl",
                 })}
               >
                 by{" "}
@@ -109,16 +109,7 @@ export default function Page({ params }: { params: { repo: string } }) {
                 </Link>
               </h2>
 
-              <span className="inline-flex text-center gap-1 mt-1">
-                <p>
-                  Created on{" "}
-                  {selectedRepo.createdAt.toLocaleDateString("en-GB")} and
-                </p>
-                <p className={updateClassName}>
-                  last updated on{" "}
-                  {selectedRepo.updatedAt.toLocaleDateString("en-GB")}
-                </p>
-              </span>
+              <span className="italic">{selectedRepo.description}</span>
             </div>
 
             <div className="flex items-center justify-evenly col-span-1 p-4">
@@ -137,13 +128,22 @@ export default function Page({ params }: { params: { repo: string } }) {
                 }}
               />
             </div>
+
+            <Divider className="col-span-full" />
+
+            <span className="col-span-full py-2 items-center justify-center inline-flex text-center gap-1 mt-1">
+              <p>
+                Created on {selectedRepo.createdAt.toLocaleDateString("en-GB")}{" "}
+                and
+              </p>
+              <p className={updateClassName}>
+                last updated on{" "}
+                {selectedRepo.updatedAt.toLocaleDateString("en-GB")}
+              </p>
+            </span>
           </div>
 
-          <div className="w-full bg-default-50 rounded-xl py-2 mt-1 italic">
-            {selectedRepo.description}
-          </div>
-
-          <section className="mt-1 text-left rounded-xl max-w-4xl">
+          <section className="w-full mt-1 text-left rounded-xl max-w-4xl">
             {markdownRender ?? (
               <Spinner
                 className="mt-16"
