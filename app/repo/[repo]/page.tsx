@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { repo: string } }) {
     <Spinner
       classNames={{ label: "font-semibold" }}
       color="primary"
-      label="Loading similar repositories..."
+      label="Cargando repositorios similares..."
       labelColor="primary"
     />
   );
@@ -48,8 +48,10 @@ export default function Page({ params }: { params: { repo: string } }) {
           />
         );
       })
-      .catch((error) => {
-        setMarkdownRender(<p>Failed to fetch README.md: {error.message}</p>);
+      .catch(() => {
+        setMarkdownRender(
+          <p>No se ha podido cargar el README del repositorio</p>
+        );
       });
 
     // Fetch content recommendations:
@@ -68,13 +70,17 @@ export default function Page({ params }: { params: { repo: string } }) {
           renderedRecommendations.length > 0 ? (
             renderedRecommendations
           ) : (
-            <p className="default-400">No similar repositories found.</p>
+            <p className="default-400">
+              No se han encontrado repositorios similares.
+            </p>
           )
         );
       })
       .catch(() => {
         setSimilarRepositories(
-          <p className="default-400">No similar repositories found.</p>
+          <p className="default-400">
+            No se han encontrado repositorios similares.
+          </p>
         );
       });
   });
@@ -121,13 +127,13 @@ export default function Page({ params }: { params: { repo: string } }) {
 
               <h2
                 className={subtitle({
-                  class: "text-2xl text-primary",
+                  class: "text-2xl",
                 })}
               >
-                by{" "}
+                por{" "}
                 <Link
                   isExternal
-                  className="text-xl"
+                  className="text-xl text/primary"
                   href={`https://github.com/${selectedRepo.owner}`}
                 >
                   @{selectedRepo.owner}
@@ -162,11 +168,10 @@ export default function Page({ params }: { params: { repo: string } }) {
 
             <span className="col-span-full py-2 items-center justify-center inline-flex text-center gap-1 mt-1">
               <p>
-                Created on {selectedRepo.createdAt.toLocaleDateString("en-GB")}{" "}
-                and
+                Creado el {selectedRepo.createdAt.toLocaleDateString("en-GB")} y
               </p>
               <p className={updateClassName}>
-                last updated on{" "}
+                actualizado por última vez el{" "}
                 {selectedRepo.updatedAt.toLocaleDateString("en-GB")}
               </p>
             </span>
@@ -178,7 +183,7 @@ export default function Page({ params }: { params: { repo: string } }) {
                 <Spinner
                   classNames={{ label: "font-semibold" }}
                   color="primary"
-                  label="Loading repository README..."
+                  label="Cargando README del repositorio..."
                   labelColor="primary"
                 />
               </div>
@@ -193,8 +198,8 @@ export default function Page({ params }: { params: { repo: string } }) {
               closeDelay={0}
               content={
                 <span className="max-w-xs text-center">
-                  Recommendations are based on analyzed words for each
-                  repository description.
+                  Las recomendaciones se basan en palabras analizadas para cada
+                  descripción del repositorio.
                 </span>
               }
               offset={5}
@@ -205,7 +210,7 @@ export default function Page({ params }: { params: { repo: string } }) {
               </span>
             </Tooltip>
             <h3 className="font-semibold text-default-500">
-              Similar repositories
+              Repositorios similares
             </h3>
           </span>
           {similarRepositories}

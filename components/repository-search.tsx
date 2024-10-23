@@ -48,7 +48,7 @@ export function RepositorySearch({
   return (
     <Autocomplete
       ref={inputRef}
-      aria-label="Search repositories"
+      aria-label="Buscar repositorios"
       className="max-w-xs"
       defaultItems={items}
       endContent={
@@ -56,7 +56,7 @@ export function RepositorySearch({
           K
         </Kbd>
       }
-      placeholder="Search repositories..."
+      placeholder="Buscar repositorios..."
       startContent={
         <SearchIcon className="fill-none text-default-500" size={32} />
       }
@@ -95,7 +95,7 @@ export function RepositorySearch({
             <div className="flex flex-col">
               <span className="text-small">{repo.name}</span>
               <span className="text-tiny text-default-400">
-                by {repo.owner}
+                por {repo.owner}
               </span>
             </div>
           </div>

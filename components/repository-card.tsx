@@ -63,7 +63,7 @@ export function RepositoryCardUpdateFrequency({
                 {repo.name}
               </h4>
               <h5 className="text-small tracking-tight text-default-400 italic">
-                by @{repo.owner}
+                por @{repo.owner}
               </h5>
             </div>
           </div>
@@ -76,10 +76,10 @@ export function RepositoryCardUpdateFrequency({
               closeDelay={0}
               content={
                 <span className="max-w-xs text-center">
-                  A repository is frequently updated if latest changes were
-                  implemented than 15 days ago, usually updated they were
-                  implemented up to 60 days ago, and rarely updated if it has
-                  been longer than that.
+                  Un repositorio se actualiza frecuentemente si los últimos
+                  cambios se implementaron hace menos de 15 días, se actualiza
+                  habitualmente si se implementaron hasta hace 60 días, y se
+                  actualiza raramente si ha pasado más tiempo.
                 </span>
               }
               offset={15}
@@ -91,10 +91,10 @@ export function RepositoryCardUpdateFrequency({
             </Tooltip>
             <p className={`font-semibold text-small ${updateClassName}`}>
               {updateClassName.startsWith("text-success")
-                ? "Frequently updated"
+                ? "Actualizado frecuentemente"
                 : updateClassName.startsWith("text-warning")
-                  ? "Usually updated"
-                  : "Rarely updated"}
+                  ? "Actualizado habitualmente"
+                  : "Raramente actualizado"}
             </p>
           </div>
           <div className="flex items-center justify-end gap-1">
@@ -155,7 +155,7 @@ export function RepositoryCardLanguage({
                 {repo.name}
               </h4>
               <h5 className="text-small tracking-tight text-default-400 italic">
-                by @{repo.owner}
+                por @{repo.owner}
               </h5>
             </div>
           </div>

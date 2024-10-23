@@ -32,7 +32,7 @@ export default function Error({
         <BrokenChainIcon className="fill-danger" size={128} />
       </motion.div>
       <h2 className="text-center text-2xl font-semibold">
-        Something has broken internally. We&apos;re sorry about it!
+        Algo se ha roto internamente. ¡Lo sentimos!
       </h2>
       <Button
         variant="ghost"
@@ -41,7 +41,7 @@ export default function Error({
           () => reset()
         }
       >
-        Let&apos;s try again
+        Intentarlo de nuevo
       </Button>
     </div>
   );

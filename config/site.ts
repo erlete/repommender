@@ -1,18 +1,18 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Repommender - Find useful repositories, easily.",
+  name: "Recomendador - Encuentra repositorios útiles fácilmente.",
   description:
-    "GitHub repository recommender. Find repositories based on your interests.",
+    "Recomendador de repositorios de GitHub. Encuentra repositorios basados en tus intereses.",
   navItems: [
     {
-      label: "Home",
+      label: "Inicio",
       href: "/",
     },
   ],
   navMenuItems: [
     {
-      label: "Home",
+      label: "Inicio",
       href: "/",
     },
   ],

@@ -20,10 +20,10 @@ export default function Page() {
         <LookingForIcon className="fill-warning" size={128} />
       </motion.div>
       <h2 className="text-center text-2xl font-semibold">
-        We could not find the page you&apos;re looking for.
+        No hemos podido encontrar la página que estás buscando.
       </h2>
       <Button variant="ghost" onClick={() => window.history.back()}>
-        Go back
+        Volver a la página anterior
       </Button>
     </div>
   );
