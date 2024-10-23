@@ -1,13 +1,17 @@
 from fastapi import FastAPI
+from .recommender import get_recommendations
+from typing import Optional
+from fastapi import Query
 
-### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/fastapi/docs", openapi_url="/api/fastapi/openapi.json")
 
 
-@app.get("/api/fastapi/hello")
-def hello_fast_api():
+@app.get("/api/fastapi/get-recommendations")
+def get_recommendations_endpoint(content: Optional[str] = Query(None)):
+    if content is None:
+        return {"recommendations": []}
 
-    return {"message": "Hello FastAPI"}
-
-
-# EI1aPUIlQ6I5K8AxWfOXRszTir5JZg3R9KFbLqHScAs
+    try:
+        return {"recommendations": get_recommendations(content)}
+    except Exception:
+        return {"recommendations": []}
