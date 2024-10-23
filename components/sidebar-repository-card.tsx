@@ -71,7 +71,7 @@ export function SidebarRepositoryCard({
             placement="top"
           >
             <span>
-              <InfoIcon className="fill-none stroke-default-400 " size={15} />
+              <InfoIcon className="fill-default-400" size={14} />
             </span>
           </Tooltip>
           <p className={`font-semibold text-small ${updateClassName}`}>

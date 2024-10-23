@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { Spinner } from "@nextui-org/spinner";
 import { Link } from "@nextui-org/link";
 import { useTheme } from "next-themes";
 import { Image } from "@nextui-org/image";
 import { Divider } from "@nextui-org/divider";
+import { Tooltip } from "@nextui-org/tooltip";
+import { useMount } from "react-use";
 
 import { REPOSITORIES } from "@/data/repos";
 import { subtitle, title } from "@/components/primitives";
 import { LOGOS } from "@/data/language-styles";
-import { UserIcon } from "@/components/icons/ui";
+import { InfoIcon, UserIcon } from "@/components/icons/ui";
 import { SidebarRepositoryCard } from "@/components/sidebar-repository-card";
 
 export default function Page({ params }: { params: { repo: string } }) {
@@ -21,30 +23,52 @@ export default function Page({ params }: { params: { repo: string } }) {
     null
   );
 
-  useEffect(() => {
-    if (!markdownRender) {
-      if (theme) {
-        fetch(`/api/github/readme?fullName=${selectedRepo.fullName}`)
-          .then(async (response) => {
-            const readmeContent = await response.text();
+  const [similarRepositories, setSimilarRepositories] = useState<JSX.Element>(
+    <Spinner color="primary" size="lg" />
+  );
 
-            setMarkdownRender(
-              <MarkdownPreview
-                className="rounded-xl p-4 [&>div]:bg-default-200"
-                source={readmeContent}
-                wrapperElement={{
-                  "data-color-mode": theme === "dark" ? "dark" : "light",
-                }}
-              />
-            );
-          })
-          .catch((error) => {
-            setMarkdownRender(
-              <p>Failed to fetch README.md: {error.message}</p>
-            );
-          });
-      }
-    }
+  useMount(() => {
+    console.log("markdownrender", markdownRender, !markdownRender);
+
+    fetch(`/api/github/readme?fullName=${selectedRepo.fullName}`)
+      .then(async (response) => {
+        const readmeContent = await response.text();
+
+        setMarkdownRender(
+          <MarkdownPreview
+            className="rounded-xl p-4 [&>div]:bg-default-200"
+            source={readmeContent}
+            wrapperElement={{
+              "data-color-mode": theme === "dark" ? "dark" : "light",
+            }}
+          />
+        );
+      })
+      .catch((error) => {
+        setMarkdownRender(<p>Failed to fetch README.md: {error.message}</p>);
+      });
+
+    fetch(`/api/fastapi/get-recommendations?content=${selectedRepo.name}`)
+      .then(async (response) => {
+        const { recommendations } = await response.json();
+
+        const renderedRecommendations = recommendations.map((index: number) => (
+          <SidebarRepositoryCard key={index} repo={REPOSITORIES[index]} />
+        ));
+
+        setSimilarRepositories(
+          renderedRecommendations.length > 0 ? (
+            renderedRecommendations
+          ) : (
+            <p className="default-400">No similar repositories found.</p>
+          )
+        );
+      })
+      .catch(() => {
+        setSimilarRepositories(
+          <p className="default-400">No similar repositories found.</p>
+        );
+      });
   });
 
   const getUpdateClassName = (updatedAt: Date) => {
@@ -63,24 +87,12 @@ export default function Page({ params }: { params: { repo: string } }) {
 
   const updateClassName = getUpdateClassName(selectedRepo.updatedAt);
 
-  //   {
-  //     "name": "freeCodeCamp",
-  //     "full_name": "freeCodeCamp/freeCodeCamp",
-  //     "owner": "freeCodeCamp",
-  //     "html_url": "https://github.com/freeCodeCamp/freeCodeCamp",
-  //     "description": "freeCodeCamp.org's open-source codebase and curriculum. Learn to code for free.",
-  //     "language": "TypeScript",
-  //     "stargazers_count": "404417",
-  //     "created_at": "2014-12-24T17:49:19Z",
-  //     "updated_at": "2024-10-22T14:37:09Z"
-  // },
-
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <section className="flex flex-col items-center justify-center gap-4">
       <div className="grid grid-cols-8 gap-4">
-        <div className="col-span-6 max-w-4xl text-center flex flex-col items-center justify-start gap-2">
+        <div className="w-full col-span-6 text-center flex flex-col items-center justify-start gap-2">
           <div className="grid grid-cols-5 bg-default-100 rounded-xl">
             <div className="flex items-center justify-evenly col-span-1 p-4">
               {LOGOS[selectedRepo.language.toLowerCase() as keyof typeof LOGOS]}
@@ -143,7 +155,7 @@ export default function Page({ params }: { params: { repo: string } }) {
             </span>
           </div>
 
-          <section className="w-full mt-1 text-left rounded-xl max-w-4xl">
+          <section className="w-full mt-1 text-left rounded-xl">
             {markdownRender ?? (
               <Spinner
                 className="mt-16"
@@ -155,12 +167,26 @@ export default function Page({ params }: { params: { repo: string } }) {
             )}
           </section>
         </div>
-        <div className="col-span-2 w-full h-fit flex flex-col gap-4 bg-default-100 rounded-xl p-4">
-          <p>Similar repositories:</p>
-          <SidebarRepositoryCard repo={REPOSITORIES[9999]} />
-          <SidebarRepositoryCard repo={REPOSITORIES[1124]} />
-          <SidebarRepositoryCard repo={REPOSITORIES[9993]} />
-          <SidebarRepositoryCard repo={REPOSITORIES[8475]} />
+        <div className="col-span-2 w-full h-fit flex flex-col gap-4 bg-default-100 rounded-xl p-4 grow-0 min-w-xs max-w-xs">
+          <span className="inline-flex gap-1 items-center">
+            <Tooltip
+              content={
+                <span className="max-w-xs text-center">
+                  Recommendations are based on analyzed words for each
+                  repository description.
+                </span>
+              }
+              placement="top"
+            >
+              <span>
+                <InfoIcon className="fill-default-400" size={16} />
+              </span>
+            </Tooltip>
+            <h3 className="font-semibold text-default-500">
+              Similar repositories
+            </h3>
+          </span>
+          {similarRepositories}
         </div>
       </div>
     </section>
