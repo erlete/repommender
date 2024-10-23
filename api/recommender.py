@@ -24,7 +24,7 @@ PORTER_STEMMER = PorterStemmer()
 
 
 def get_recommendations(content: str):
-    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)
+    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)[:5000]
     ORIGINAL_DATA = ORIGINAL_DATA.dropna(subset=["name", "description"])
 
     if content not in ORIGINAL_DATA["name"].values:
@@ -32,10 +32,8 @@ def get_recommendations(content: str):
 
     if os.path.exists(PREPROCESS_CACHE_FILE) and not REVALIDATE:
         with open(PREPROCESS_CACHE_FILE, "rb") as f:
-            start = pc()
             preprocessed_text = pickle.load(f)
     else:
-        start = pc()
         preprocessed_text = [
             " ".join(
                 [
