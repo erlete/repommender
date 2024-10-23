@@ -108,12 +108,14 @@ export default function Page({ params }: { params: { repo: string } }) {
                 isExternal
                 href={`https://github.com/${selectedRepo.fullName}`}
               >
-                <h1 className={title()}>{selectedRepo.name}</h1>
+                <h1 className={title({ color: "primary" })}>
+                  {selectedRepo.name}
+                </h1>
               </Link>
 
               <h2
                 className={subtitle({
-                  class: "text-2xl",
+                  class: "text-2xl text-primary",
                 })}
               >
                 by{" "}

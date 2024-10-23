@@ -1,56 +1,102 @@
 "use client";
 
-import { Code } from "@nextui-org/code";
 import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
 import { button as buttonStyles } from "@nextui-org/theme";
+import { Divider } from "@nextui-org/divider";
+import { Button } from "@nextui-org/button";
+import { useState } from "react";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 
-import { siteConfig } from "@/config/site";
-import { GithubLogo } from "@/components/icons/logos";
 import { subtitle, title } from "@/components/primitives";
+import { SidebarRepositoryCardLanguage } from "@/components/sidebar-repository-card";
+import { REPOSITORIES } from "@/data/repos";
+import { LANGUAGES, LOGOS } from "@/data/language-styles";
 
 export default function Home() {
+  const [clickCount, setClickCount] = useState(0);
+  const [language, setLanguage] = useState<string | null>(null);
+
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    <section className="place-self-center flex flex-col items-center justify-center gap-4 py-8 md:py-10 max-w-4xl">
       <div className="inline-block max-w-xl text-center justify-center">
-        <h1 className={title()}>Make&nbsp;</h1>
-        <h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
+        <h1 className={title()}>Encuentra el</h1>
         <br />
-        <h1 className={title()}>
-          websites regardless of your design experience.
-        </h1>
+        <h1 className={title({ color: "primary" })}>repositorio perfecto</h1>
+        <br />
+        <h1 className={title()}>para tus proyectos</h1>
         <h2 className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library.
+          Repommender te garantiza encontrar
+        </h2>
+        <h2 className={subtitle({ class: "-mt-3" })}>
+          los repositorios más populares de GitHub
         </h2>
       </div>
 
       <div className="flex gap-3">
         <Link
           className={buttonStyles({
+            className: "font-bold text-background",
             color: "primary",
             radius: "full",
             variant: "shadow",
           })}
           href="#"
         >
-          CTA
-        </Link>
-        <Link
-          isExternal
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
-          href={siteConfig.links.github}
-        >
-          <GithubLogo size={20} />
-          GitHub
+          Explorar repositorios populares
         </Link>
       </div>
 
-      <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </Snippet>
+      <div className="flex flex-col items-center gap-4 mt-32">
+        <h2
+          className={title({
+            color: "primary",
+            className: "text-center",
+          })}
+        >
+          Repositorios populares
+        </h2>
+
+        <Divider />
+
+        <Autocomplete
+          label="Filtrar por lenguaje"
+          placeholder="Todos los lenguajes"
+          variant="bordered"
+          onSelectionChange={(value) => {
+            setLanguage(value as string);
+            setClickCount(0);
+          }}
+        >
+          {LANGUAGES.map((item) => (
+            <AutocompleteItem
+              key={item}
+              startContent={
+                <span className="w-6 h-6">
+                  {LOGOS[item.toLowerCase() as keyof typeof LOGOS]}
+                </span>
+              }
+              value={item}
+            >
+              {item}
+            </AutocompleteItem>
+          ))}
+        </Autocomplete>
+
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+          {REPOSITORIES.filter(
+            (repo) =>
+              language === null ||
+              repo.language.toLowerCase() === language.toLowerCase()
+          )
+            .slice(0, Math.min(12 * (1 + clickCount), REPOSITORIES.length))
+            .map((repo) => (
+              <SidebarRepositoryCardLanguage key={repo.index} repo={repo} />
+            ))}
+        </div>
+
+        <Button variant="ghost" onPress={() => setClickCount(clickCount + 1)}>
+          Mostrar más
+        </Button>
       </div>
     </section>
   );
