@@ -12,9 +12,9 @@ import { useMount } from "react-use";
 
 import { REPOSITORIES } from "@/data/repos";
 import { subtitle, title } from "@/components/primitives";
-import { LOGOS } from "@/data/language-styles";
-import { InfoIcon, UserIcon } from "@/components/icons/ui";
+import { InfoIcon } from "@/components/icons/ui";
 import { SidebarRepositoryCard } from "@/components/sidebar-repository-card";
+import { getLanguageLogo } from "@/data/language-styles";
 
 export default function Page({ params }: { params: { repo: string } }) {
   const { theme } = useTheme();
@@ -97,10 +97,13 @@ export default function Page({ params }: { params: { repo: string } }) {
   return (
     <section className="flex flex-col items-center justify-center gap-4">
       <div className="grid grid-cols-8 gap-4">
-        <div className="w-full col-span-6 text-center flex flex-col items-center justify-start gap-2">
-          <div className="grid grid-cols-5 bg-default-100 rounded-xl">
+        <div className="max-w-4xl w-full col-span-6 text-center flex flex-col items-center justify-start gap-2">
+          <div className="w-full grid grid-cols-5 bg-default-100 rounded-xl">
             <div className="flex items-center justify-evenly col-span-1 p-4">
-              {LOGOS[selectedRepo.language.toLowerCase() as keyof typeof LOGOS]}
+              {getLanguageLogo(selectedRepo.language, {
+                size: 128,
+                className: "rounded-2xl",
+              })}
             </div>
 
             <div className="flex flex-col items-center justify-center max-w-xl col-start-2 col-span-3">
@@ -132,14 +135,18 @@ export default function Page({ params }: { params: { repo: string } }) {
             </div>
 
             <div className="flex items-center justify-evenly col-span-1 p-4">
-              <UserIcon
-                className={`w-full h-full rounded-xl fill-none stroke-default-200 ${
-                  isImageLoaded ? "hidden" : "block"
-                }`}
+              <Spinner
+                className={`w-[128] h-[128] ${isImageLoaded ? "hidden" : "block"}`}
+                classNames={{
+                  wrapper: "w-[128] h-[128] items-center justify-center",
+                  circle1: "w-[128] h-[128]",
+                  circle2: "w-[96] h-[96]",
+                }}
+                color="primary"
               />
               <Image
                 alt="Owner's avatar"
-                className={`w-full h-full rounded-xl ${isImageLoaded ? "block" : "hidden"}`}
+                className={`w-[128] h-[128] rounded-xl ${isImageLoaded ? "block" : "hidden"}`}
                 loading="lazy"
                 src={`https://github.com/${selectedRepo.owner}.png`}
                 onLoad={() => {

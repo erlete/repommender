@@ -3,11 +3,12 @@ import { Avatar } from "@nextui-org/avatar";
 import { Tooltip } from "@nextui-org/tooltip";
 import { motion } from "framer-motion";
 import { Divider } from "@nextui-org/divider";
+import { Spinner } from "@nextui-org/spinner";
 
 import { InfoIcon, StarIcon, UserIcon } from "./icons/ui";
 
 import { Repository } from "@/data/repos";
-import { LOGOS } from "@/data/language-styles";
+import { getLanguageLogo } from "@/data/language-styles";
 
 export function SidebarRepositoryCard({
   repo,
@@ -133,9 +134,18 @@ export function SidebarRepositoryCardLanguage({
             <Avatar
               isBordered
               fallback={
-                <UserIcon className="w-full h-full rounded-xl fill-none stroke-default-200" />
+                <Spinner
+                  className="w-[64] h-[64]"
+                  classNames={{
+                    wrapper: "w-[48] h-[48] items-center justify-center",
+                    circle1: "w-[48] h-[48]",
+                    circle2: "w-[32] h-[32]",
+                  }}
+                  color="primary"
+                />
               }
               radius="full"
+              showFallback={true}
               size="lg"
               src={`https://github.com/${repo.owner}.png`}
             />
@@ -153,9 +163,7 @@ export function SidebarRepositoryCardLanguage({
         <Divider />
         <CardFooter className="py-2 items-center justify-between">
           <div className="flex items-center gap-1">
-            <span className="w-6 h-6">
-              {LOGOS[repo.language.toLowerCase() as keyof typeof LOGOS]}
-            </span>
+            <span className="w-6 h-6">{getLanguageLogo(repo.language)}</span>
             <p className="text-sm">{repo.language}</p>
           </div>
           <div className="flex items-center justify-end gap-1">

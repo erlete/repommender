@@ -2,9 +2,10 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { useEffect, useRef, useState } from "react";
 import { Avatar } from "@nextui-org/avatar";
 import { Kbd } from "@nextui-org/kbd";
+import { Spinner } from "@nextui-org/spinner";
 
 import { REPOSITORIES } from "@/data/repos";
-import { SearchIcon, UserIcon } from "@/components/icons/ui";
+import { SearchIcon } from "@/components/icons/ui";
 
 /**
  * Global repository autocomplete search component.
@@ -76,12 +77,18 @@ export function GlobalRepositoryAutocomplete({
             <Avatar
               isBordered
               fallback={
-                <UserIcon
-                  className="rounded-xl fill-none stroke-default-200"
-                  size={16}
+                <Spinner
+                  className="w-[32] h-[32]"
+                  classNames={{
+                    wrapper: "w-[24] h-[24] items-center justify-center",
+                    circle1: "w-[24] h-[24]",
+                    circle2: "w-[16] h-[16]",
+                  }}
+                  color="primary"
                 />
               }
               radius="full"
+              showFallback={true}
               size="sm"
               src={`https://github.com/${repo.owner}.png`}
             />

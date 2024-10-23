@@ -10,7 +10,8 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { subtitle, title } from "@/components/primitives";
 import { SidebarRepositoryCardLanguage } from "@/components/sidebar-repository-card";
 import { REPOSITORIES } from "@/data/repos";
-import { LANGUAGES, LOGOS } from "@/data/language-styles";
+import { LANGUAGES } from "@/data/repos";
+import { getLanguageLogo } from "@/data/language-styles";
 
 export default function Home() {
   const [clickCount, setClickCount] = useState(0);
@@ -71,9 +72,7 @@ export default function Home() {
             <AutocompleteItem
               key={item}
               startContent={
-                <span className="w-6 h-6">
-                  {LOGOS[item.toLowerCase() as keyof typeof LOGOS]}
-                </span>
+                <span className="w-6 h-6">{getLanguageLogo(item)}</span>
               }
               value={item}
             >
