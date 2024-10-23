@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@nextui-org/input";
 import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
@@ -14,13 +16,15 @@ import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
 
+import { GlobalRepositoryAutocomplete } from "./global-repository-autocomplete";
+
 import { GithubLogo, Logo } from "@/components/icons/logos";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
 import { SearchIcon } from "@/components/icons/ui";
 
 export const Navbar = () => {
-  const searchInput = (
+  let searchInput = (
     <Input
       aria-label="Search"
       classNames={{
@@ -40,6 +44,8 @@ export const Navbar = () => {
       type="search"
     />
   );
+
+  searchInput = <GlobalRepositoryAutocomplete />;
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">

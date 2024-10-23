@@ -4,74 +4,10 @@ import { Code } from "@nextui-org/code";
 import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { button as buttonStyles } from "@nextui-org/theme";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
-import { useState } from "react";
-import { Avatar } from "@nextui-org/avatar";
 
 import { siteConfig } from "@/config/site";
 import { GithubLogo } from "@/components/icons/logos";
 import { subtitle, title } from "@/components/primitives";
-import { REPOSITORIES } from "@/data/repos";
-import { UserIcon } from "@/components/icons/ui";
-
-/**
- * Global repository autocomplete search component.
- *
- * This component provides pagination and search functionality.
- *
- * @returns {JSX.Element}
- */
-function GlobalRepositoryAutocomplete({
-  pageSize = 20,
-}: {
-  pageSize?: number;
-}): JSX.Element {
-  const [items, setItems] = useState(REPOSITORIES.slice(0, pageSize));
-
-  return (
-    <Autocomplete
-      className="max-w-xs"
-      defaultItems={items}
-      label="Favorite Animal"
-      placeholder="Search an animal"
-      onInputChange={(value) => {
-        const filteredRepos = REPOSITORIES.filter((repo) =>
-          repo.name.toLowerCase().includes(value.toLowerCase())
-        ).slice(0, pageSize);
-
-        setItems(filteredRepos);
-      }}
-      onSelectionChange={(value) => {
-        window.location.href = `/repo/${value}`;
-      }}
-    >
-      {(repo) => (
-        <AutocompleteItem key={repo.index} textValue={repo.name}>
-          <div className="flex gap-2 items-center">
-            <Avatar
-              isBordered
-              fallback={
-                <UserIcon
-                  className="rounded-xl fill-none stroke-default-200"
-                  size={16}
-                />
-              }
-              radius="full"
-              size="sm"
-              src={`https://github.com/${repo.owner}.png`}
-            />
-            <div className="flex flex-col">
-              <span className="text-small">{repo.name}</span>
-              <span className="text-tiny text-default-400">
-                by {repo.owner}
-              </span>
-            </div>
-          </div>
-        </AutocompleteItem>
-      )}
-    </Autocomplete>
-  );
-}
 
 export default function Home() {
   return (
@@ -109,9 +45,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div>
-        <GlobalRepositoryAutocomplete />
-      </div>
+      <div>{/* <GlobalRepositoryAutocomplete /> */}</div>
 
       <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
