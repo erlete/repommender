@@ -24,7 +24,7 @@ PORTER_STEMMER = PorterStemmer()
 
 
 def get_recommendations(content: str):
-    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)[:5000]
+    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)[:2500]
     ORIGINAL_DATA = ORIGINAL_DATA.dropna(subset=["name", "description"])
 
     if content not in ORIGINAL_DATA["name"].values:
