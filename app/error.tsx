@@ -5,8 +5,6 @@ import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion";
 
 import { BrokenChainIcon } from "@/components/icons/ui";
-
-// TODO: Implement error page (if needed).
 export default function Error({
   error,
   reset,

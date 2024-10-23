@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 import { LookingForIcon } from "@/components/icons/ui";
 
-// TODO: Implement not found page (if needed).
 export default function Page() {
   return (
     <div className="w-full h-96 flex flex-col items-center justify-evenly px-8">

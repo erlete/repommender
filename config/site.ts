@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  // TODO: Add site name and description:
-  name: "Page title",
-  description: "Page description",
+  name: "Repommender - Find useful repositories, easily.",
+  description:
+    "GitHub repository recommender. Find repositories based on your interests.",
   navItems: [
     {
       label: "Home",
@@ -17,6 +17,6 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/erlete/nextui-template",
+    github: "https://github.com/erlete/recommender",
   },
 };

@@ -14,7 +14,7 @@ import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
 
-import { GithubLogo, VercelLogo } from "@/components/icons/logos";
+import { GithubLogo, Logo } from "@/components/icons/logos";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
 import { SearchIcon } from "@/components/icons/ui";
@@ -46,9 +46,8 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
-            {/* TODO: Add company name and logo: */}
-            <VercelLogo size={64} />
-            <p className="font-bold text-inherit">Company name</p>
+            <Logo size={32} />
+            <p className="font-bold text-inherit">Repommender</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
