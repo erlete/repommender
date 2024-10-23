@@ -5,16 +5,16 @@
 /* Hide scrollbar */
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
-  }
+}
 
-  .scrollbar-hide {
+.scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
+}
 
-  /* Prevent text selection */
-  .no-select {
+/* Prevent text selection */
+.no-select {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
+}

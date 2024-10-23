@@ -27,3 +27,7 @@ export const REPOSITORIES: Repository[] = (unsanitizedRepos as any).map(
     updatedAt: new Date(repo.updated_at),
   })
 );
+
+export const LANGUAGES: string[] = Array.from(
+  new Set(REPOSITORIES.map((repo) => repo.language))
+);
