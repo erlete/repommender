@@ -45,8 +45,6 @@ export default function Home() {
         </Link>
       </div>
 
-      <div>{/* <GlobalRepositoryAutocomplete /> */}</div>
-
       <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
           <span>

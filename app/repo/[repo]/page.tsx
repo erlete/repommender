@@ -24,12 +24,16 @@ export default function Page({ params }: { params: { repo: string } }) {
   );
 
   const [similarRepositories, setSimilarRepositories] = useState<JSX.Element>(
-    <Spinner color="primary" size="lg" />
+    <Spinner
+      classNames={{ label: "font-semibold" }}
+      color="primary"
+      label="Loading similar repositories..."
+      labelColor="primary"
+    />
   );
 
   useMount(() => {
-    console.log("markdownrender", markdownRender, !markdownRender);
-
+    // Fetch README.md for rendering:
     fetch(`/api/github/readme?fullName=${selectedRepo.fullName}`)
       .then(async (response) => {
         const readmeContent = await response.text();
@@ -48,6 +52,7 @@ export default function Page({ params }: { params: { repo: string } }) {
         setMarkdownRender(<p>Failed to fetch README.md: {error.message}</p>);
       });
 
+    // Fetch content recommendations:
     fetch(`/api/fastapi/get-recommendations?content=${selectedRepo.name}`)
       .then(async (response) => {
         const { recommendations } = await response.json();
@@ -117,7 +122,7 @@ export default function Page({ params }: { params: { repo: string } }) {
                   className="text-xl"
                   href={`https://github.com/${selectedRepo.owner}`}
                 >
-                  {selectedRepo.owner}
+                  @{selectedRepo.owner}
                 </Link>
               </h2>
 
@@ -155,27 +160,32 @@ export default function Page({ params }: { params: { repo: string } }) {
             </span>
           </div>
 
-          <section className="w-full mt-1 text-left rounded-xl">
+          <section className="w-full mt-1 text-left rounded-xl ring-2 ring-default-100">
             {markdownRender ?? (
-              <Spinner
-                className="mt-16"
-                classNames={{ label: "font-semibold" }}
-                color="primary"
-                label="Loading repository README"
-                labelColor="primary"
-              />
+              <div className="w-full py-4 flex items-center justify-center">
+                <Spinner
+                  classNames={{ label: "font-semibold" }}
+                  color="primary"
+                  label="Loading repository README..."
+                  labelColor="primary"
+                />
+              </div>
             )}
           </section>
         </div>
+
         <div className="col-span-2 w-full h-fit flex flex-col gap-4 bg-default-100 rounded-xl p-4 grow-0 min-w-xs max-w-xs">
           <span className="inline-flex gap-1 items-center">
             <Tooltip
+              showArrow
+              closeDelay={0}
               content={
                 <span className="max-w-xs text-center">
                   Recommendations are based on analyzed words for each
                   repository description.
                 </span>
               }
+              offset={5}
               placement="top"
             >
               <span>
