@@ -18,13 +18,13 @@ INPUT_FILE = "./data/merged_22_10_2024.csv"
 PREPROCESS_CACHE_FILE = (
     f"./data/{INPUT_FILE.split('/')[-1].split('.')[0]}_preprocessed_cache.pkl"
 )
-REVALIDATE = True
+REVALIDATE = False
 STOPS = set(stopwords.words("english"))
 PORTER_STEMMER = PorterStemmer()
 
 
 def get_recommendations(content: str):
-    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)[:1250]
+    ORIGINAL_DATA = pd.read_csv(INPUT_FILE)
     ORIGINAL_DATA = ORIGINAL_DATA.dropna(subset=["name", "description"])
 
     if content not in ORIGINAL_DATA["name"].values:
