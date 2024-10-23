@@ -14,7 +14,7 @@ import { SearchIcon } from "@/components/icons/ui";
  *
  * @returns {JSX.Element}
  */
-export function GlobalRepositoryAutocomplete({
+export function RepositorySearch({
   pageSize = 20,
 }: {
   pageSize?: number;

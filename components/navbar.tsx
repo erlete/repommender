@@ -16,7 +16,7 @@ import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
 
-import { GlobalRepositoryAutocomplete } from "./global-repository-autocomplete";
+import { RepositorySearch } from "./repository-search";
 
 import { GithubLogo, Logo } from "@/components/icons/logos";
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -45,7 +45,7 @@ export const Navbar = () => {
     />
   );
 
-  searchInput = <GlobalRepositoryAutocomplete />;
+  searchInput = <RepositorySearch />;
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">

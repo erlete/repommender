@@ -10,7 +10,7 @@ import { InfoIcon, StarIcon, UserIcon } from "./icons/ui";
 import { Repository } from "@/data/repos";
 import { getLanguageLogo } from "@/data/language-styles";
 
-export function SidebarRepositoryCard({
+export function RepositoryCardUpdateFrequency({
   repo,
 }: {
   repo: Repository;
@@ -109,7 +109,7 @@ export function SidebarRepositoryCard({
   );
 }
 
-export function SidebarRepositoryCardLanguage({
+export function RepositoryCardLanguage({
   repo,
 }: {
   repo: Repository;

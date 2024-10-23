@@ -13,7 +13,7 @@ import { useMount } from "react-use";
 import { REPOSITORIES } from "@/data/repos";
 import { subtitle, title } from "@/components/primitives";
 import { InfoIcon } from "@/components/icons/ui";
-import { SidebarRepositoryCard } from "@/components/sidebar-repository-card";
+import { RepositoryCardUpdateFrequency } from "@/components/repository-card";
 import { getLanguageLogo } from "@/data/language-styles";
 
 export default function Page({ params }: { params: { repo: string } }) {
@@ -58,7 +58,10 @@ export default function Page({ params }: { params: { repo: string } }) {
         const { recommendations } = await response.json();
 
         const renderedRecommendations = recommendations.map((index: number) => (
-          <SidebarRepositoryCard key={index} repo={REPOSITORIES[index]} />
+          <RepositoryCardUpdateFrequency
+            key={index}
+            repo={REPOSITORIES[index]}
+          />
         ));
 
         setSimilarRepositories(

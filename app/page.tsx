@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 
 import { subtitle, title } from "@/components/primitives";
-import { SidebarRepositoryCardLanguage } from "@/components/sidebar-repository-card";
+import { RepositoryCardLanguage } from "@/components/repository-card";
 import { REPOSITORIES } from "@/data/repos";
 import { LANGUAGES } from "@/data/repos";
 import { getLanguageLogo } from "@/data/language-styles";
@@ -89,7 +89,7 @@ export default function Home() {
           )
             .slice(0, Math.min(12 * (1 + clickCount), REPOSITORIES.length))
             .map((repo) => (
-              <SidebarRepositoryCardLanguage key={repo.index} repo={repo} />
+              <RepositoryCardLanguage key={repo.index} repo={repo} />
             ))}
         </div>
 
