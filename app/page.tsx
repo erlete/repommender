@@ -1,11 +1,54 @@
+"use client";
+
 import { Code } from "@nextui-org/code";
 import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { button as buttonStyles } from "@nextui-org/theme";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
+import { useState } from "react";
 
 import { siteConfig } from "@/config/site";
 import { GithubLogo } from "@/components/icons/logos";
 import { subtitle, title } from "@/components/primitives";
+import { REPOSITORIES } from "@/data/repos";
+
+/**
+ * Global repository autocomplete search component.
+ *
+ * This component provides pagination and search functionality.
+ *
+ * @returns {JSX.Element}
+ */
+function GlobalRepositoryAutocomplete({
+  pageSize = 20,
+}: {
+  pageSize?: number;
+}): JSX.Element {
+  const [items, setItems] = useState(REPOSITORIES.slice(0, pageSize));
+
+  return (
+    <Autocomplete
+      className="max-w-xs"
+      defaultItems={items}
+      label="Favorite Animal"
+      placeholder="Search an animal"
+      onInputChange={(value) => {
+        const filteredRepos = REPOSITORIES.filter((repo) =>
+          repo.name.toLowerCase().includes(value.toLowerCase())
+        ).slice(0, pageSize);
+
+        setItems(filteredRepos);
+      }}
+      onSelectionChange={(value) => {
+        window.location.href = `/repo/${value}`;
+      }}
+    >
+      {(repo) => (
+        <AutocompleteItem key={repo.index}>{repo.name}</AutocompleteItem>
+      )}
+    </Autocomplete>
+  );
+}
 
 export default function Home() {
   return (
@@ -41,6 +84,10 @@ export default function Home() {
           <GithubLogo size={20} />
           GitHub
         </Link>
+      </div>
+
+      <div>
+        <GlobalRepositoryAutocomplete />
       </div>
 
       <div className="mt-8">
