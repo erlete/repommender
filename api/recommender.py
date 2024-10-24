@@ -14,10 +14,8 @@ nltk.download("punkt", quiet=True)
 nltk.download("punkt_tab", quiet=True)
 nltk.download("stopwords", quiet=True)
 
-INPUT_FILE = "./data/merged_22_10_2024.csv"
-PREPROCESS_CACHE_FILE = (
-    f"./data/{INPUT_FILE.split('/')[-1].split('.')[0]}_preprocessed_cache.pkl"
-)
+INPUT_FILE = "./data/simulated-db/repositories-table.csv"
+PREPROCESS_CACHE_FILE = f"./data/simulated-cache/repositories-table-preprocessed.pkl"
 REVALIDATE = False
 STOPS = set(stopwords.words("english"))
 PORTER_STEMMER = PorterStemmer()
