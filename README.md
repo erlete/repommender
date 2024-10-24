@@ -25,6 +25,9 @@ Para poder ejecutar este proyecto, es necesario tener instaladas las tecnología
 
 ## Instalación
 
+> [!IMPORTANT]
+> El proyecto cuenta con una manera directa de realizar toda la instalación y descarga de datos, siempre que Node.js y Python estén instalados, así como un gestor de paquetes de Node.js (de momento sólo está disponible para `npm` y `pnpm`). De ser así, sólo sería necesario ejecutar el comando `npm run setup:npm` o `pnpm run setup:pnpm` en la carpeta raíz del proyecto. En caso de que no se pueda o quiera utilizar este comando, se puede seguir con los pasos a continuación.
+
 Debido a que este proyecto hace uso de dos tipos de backend (uno en Node.js y otro en Python), es necesario instalar ambas tecnologías y sus dependencias.
 
 ### Dependencias de Node.js
@@ -51,7 +54,7 @@ En caso de que se quieran instalar también las dependencias de desarrollo (lint
 python -m pip install -r requirements-dev.txt
 ```
 
-## Preparación de los datos
+### Preparación de los datos
 
 El proyecto utiliza un conjunto de datos preprocesado para generar las recomendaciones. Para ello, es necesario ejecutar el siguiente comando en la carpeta raíz del proyecto:
 
