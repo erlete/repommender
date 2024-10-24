@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "fastapi-install": "python -m pip install -r requirements.txt",
-    "fastapi-install-dev": "python -m pip install -r requirements.txt -r requirements-dev.txt",
     "fastapi-dev": "python -m uvicorn api.index:app --reload",
     "next-dev": "next dev --turbo",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "setup:npm": "npm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python scripts/setup.py",
+    "setup:pnpm": "pnpm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python scripts/setup.py",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+    "lint": "next lint"
   },
   "dependencies": {
     "@nextui-org/autocomplete": "^2.1.7",
