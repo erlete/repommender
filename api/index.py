@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from .recommender import get_recommendations
-from .similarities import get_similarities
+from .recommender import get_repository_recommendations
+from .similarities import get_similar_users
 from typing import Optional
 from fastapi import Query
 from pydantic import BaseModel
@@ -19,7 +19,7 @@ app = FastAPI(docs_url="/api/fastapi/docs", openapi_url="/api/fastapi/openapi.js
 @app.get("/api/fastapi/get-recommended-repositories")
 def get_recommended_repositories_ep(content: str):
     try:
-        return {"items": get_recommendations(content)}
+        return {"items": get_repository_recommendations(content)}
     except Exception as exc:
         return {"error": f"A problem occurred: {exc}"}
 
@@ -28,7 +28,7 @@ def get_recommended_repositories_ep(content: str):
 def get_similar_users_ep(request: SimilarUsersRequest):
     try:
         return {
-            "items": get_similarities(
+            "items": get_similar_users(
                 request.languages,
                 request.interests,
                 request.country,

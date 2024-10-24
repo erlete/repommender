@@ -18,7 +18,7 @@ def get_row_similarity(original, compared):
     )
 
 
-def get_similarities(
+def get_similar_users(
     languages: list[str], interests: list[str], country: str, age: int
 ) -> list[str]:
     # Read data from the simulated profiles table and preprocess it:

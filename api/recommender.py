@@ -21,7 +21,7 @@ STOPS = set(stopwords.words("english"))
 PORTER_STEMMER = PorterStemmer()
 
 
-def get_recommendations(content: str):
+def get_repository_recommendations(content: str):
     ORIGINAL_DATA = pd.read_csv(INPUT_FILE)
     ORIGINAL_DATA = ORIGINAL_DATA.dropna(subset=["name", "description"])
 
