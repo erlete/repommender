@@ -8,6 +8,12 @@ Author:
 """
 
 import os
+import sys
+
+# Ensure that the Python version is 3.10 or higher:
+if sys.version_info.major > 3 and sys.version_info.minor >= 10:
+    print("This script requires Python 3.10 or higher.")
+    exit(1)
 
 # Ensure that required dependencies are installed:
 try:
