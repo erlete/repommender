@@ -1,4 +1,4 @@
-# Repommender - Encuentra el repositorio perfecto para tus proyectos
+# Repommender - Recomendador de repositorios de GitHub basado en popularidad, contenido y colaboradores
 
 > [!IMPORTANT]
 > Este repositorio no es más que una simulación de una funcionalidad de sistema de recomendación mixto (por popularidad, basado en contenido y por colaboración). Mientras que algunas partes del frontend y el backend son completamente funcionales, hay otras que provienen de datos pregenerados o preprocesados (otros usuarios del sistema, repositorios sugeridos, etc.). Es por este motivo que este repositorio debería ser utilizado únicamente con propósitos educativos.

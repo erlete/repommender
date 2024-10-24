@@ -16,7 +16,7 @@ export async function GET({ nextUrl: { searchParams } }: NextRequest) {
 
   try {
     await mongoDbClient.connect();
-    const usersCollection = mongoDbClient.db("recommender").collection("users");
+    const usersCollection = mongoDbClient.db("repommender").collection("users");
 
     const query = params.username
       ? { username: params.username }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
 
   try {
     await mongoDbClient.connect();
-    const usersCollection = mongoDbClient.db("recommender").collection("users");
+    const usersCollection = mongoDbClient.db("repommender").collection("users");
 
     // Check if user already exists:
     const user = await usersCollection.findOne({
