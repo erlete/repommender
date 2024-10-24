@@ -55,11 +55,13 @@ export default function Page({ params }: { params: { repo: string } }) {
       });
 
     // Fetch content recommendations:
-    fetch(`/api/fastapi/get-recommendations?content=${selectedRepo.name}`)
+    fetch(
+      `/api/fastapi/get-recommended-repositories?content=${selectedRepo.name}`
+    )
       .then(async (response) => {
-        const { recommendations } = await response.json();
+        const body = await response.json();
 
-        const renderedRecommendations = recommendations.map((index: number) => (
+        const renderedRecommendations = body.items.map((index: number) => (
           <RepositoryCardUpdateFrequency
             key={index}
             repo={REPOSITORIES[index]}
