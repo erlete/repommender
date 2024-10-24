@@ -1,8 +1,6 @@
 from fastapi import FastAPI
-from .recommender import get_repository_recommendations
-from .similarities import get_similar_users
-from typing import Optional
-from fastapi import Query
+from .repository_recommender import get_repository_recommendations
+from .user_similarities import get_similar_users
 from pydantic import BaseModel
 
 

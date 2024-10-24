@@ -1,6 +1,5 @@
 import os
 import pickle
-from time import perf_counter as pc
 
 import nltk
 import pandas as pd
