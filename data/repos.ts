@@ -1,4 +1,4 @@
-import unsanitizedRepos from "@/data/popular-repos.json";
+import unsanitizedRepos from "@/data/simulated-db/repositories-table.json";
 
 export type Repository = {
   index: number;

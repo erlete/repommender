@@ -98,4 +98,5 @@ def run() -> None:
     print(f"Total users: {len(users_data)}")
 
     # Save dataframe to CSV file:
+    print("Saving users table as CSV...")
     users_data.to_csv("data/simulated-db/profiles-table.csv", index=False)

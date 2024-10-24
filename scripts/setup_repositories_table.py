@@ -28,4 +28,11 @@ def run() -> None:
     print(f"Total repositories: {len(repositories_df)}")
 
     # Save dataframe to CSV file:
+    print("Saving repositories table as CSV...")
     repositories_df.to_csv("data/simulated-db/repositories-table.csv", index=False)
+
+    # Save dataframe to JSON file:
+    print("Saving repositories table as JSON...")
+    repositories_df.to_json(
+        "data/simulated-db/repositories-table.json", orient="records"
+    )
