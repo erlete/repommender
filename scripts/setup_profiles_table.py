@@ -10,92 +10,86 @@ Author:
 """
 
 import random
+from typing import Any
 import kagglehub
 import pandas as pd
 import os
 
 
-def run() -> None:
+def run(config: dict[str, Any]) -> None:
     """Perform module tasks."""
-
     # Download dataset, sanitize, trim and format dataframe:
     print("Downloading usernames dataset...")
     path = os.path.join(
         kagglehub.dataset_download("paulosnchezerlete/repommender"), "users.csv"
     )
     print("Sanitizing, trimming and formatting usernames dataset...")
-    usernames_df = pd.read_csv(path).iloc[:, 0].dropna().head(10000).str.lower()
+    usernames_df = pd.read_csv(path)
+    usernames_df = (
+        usernames_df.iloc[:, 0]
+        .dropna()
+        .head(min(config["profiles-table"]["user-count"], len(usernames_df)))
+        .str.lower()
+    )
 
-    def generate_random_row(index: int) -> list[str | list[str] | int]:
+    def generate_random_row(count: int) -> pd.DataFrame:
         """Generate a random row for the users table.
 
         Args:
             index (int): Index of the row to generate.
+            count (int): Total number of profiles to generate.
 
         Returns:
             list: List containing the username, a list of random languages, a list
                 of random interests, a random country, and a random age.
         """
-        LANGUAGES = [
-            "Python",
-            "TypeScript",
-            "JavaScript",
-            "Java",
-            "C++",
-            "C#",
-            "Ruby",
-            "Go",
-            "Swift",
-            "Kotlin",
-            "PHP",
-            "Rust",
-        ]
+        languages = config["interactions-table"]["random-generation"]["languages"]
+        interests = config["interactions-table"]["random-generation"]["interests"]
+        countries = config["interactions-table"]["random-generation"]["countries"]
+        age = config["interactions-table"]["random-generation"]["age"]
 
-        INTERESTS = [
-            "Algorithms",
-            "Data Science",
-            "Computer Science",
-            "Machine Learning",
-            "Deep Learning",
-            "Web Development",
-            "Mobile Development",
-            "Game Development",
-            "Cybersecurity",
-            "Cloud Computing",
-            "DevOps",
-            "AI",
-            "Blockchain",
-            "IoT",
-            "AR/VR",
-            "Big Data",
-            "Quantum Computing",
-            "Networking",
-            "Databases",
-            "UI/UX",
-        ]
-
-        COUNTRIES = ["Spain", "USA", "Germany", "India", "Canada"]
-
-        return [
-            usernames_df.iloc[index],
-            random.sample(LANGUAGES, k=random.randint(2, 8)),
-            random.sample(INTERESTS, k=random.randint(5, 12)),
-            random.choice(COUNTRIES),
-            random.randint(18, 75),
-        ]
+        data = {
+            "username": [usernames_df.iloc[i] for i in range(count)],
+            "languages": [
+                random.sample(
+                    languages,
+                    k=random.randint(
+                        2,
+                        int(len(languages) * 0.75),
+                    ),
+                )
+                for _ in range(count)
+            ],
+            "interests": [
+                random.sample(
+                    interests,
+                    k=random.randint(
+                        5,
+                        int(len(interests) * 0.75),
+                    ),
+                )
+                for _ in range(count)
+            ],
+            "country": [random.choice(countries) for _ in range(count)],
+            "age": [
+                random.randint(
+                    age["min"],
+                    age["max"],
+                )
+                for _ in range(count)
+            ],
+        }
+        return pd.DataFrame(
+            data, columns=["username", "languages", "interests", "country", "age"]
+        )
 
     # Create target dataframe and populate it with random data:
     print("Generating users...")
-    users_data = pd.DataFrame(
-        [],
-        columns=["username", "languages", "interests", "country", "age"],
-    )
-    for i in range(len(usernames_df)):
-        users_data.loc[len(users_data)] = generate_random_row(i)
+    users_data = generate_random_row(len(usernames_df))
 
     print(" Generated users ".center(80, "="))
     print(users_data.head(10))
-    print(f"Total users: {len(users_data)}")
+    print(f" Total users: {len(users_data)} ".center(80, "="))
 
     # Save dataframe to CSV file:
     print("Saving users table as CSV...")

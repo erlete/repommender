@@ -1,0 +1,62 @@
+{
+    "profiles-table": {
+        "user-count": 10000
+    },
+    "interactions-table": {
+        "interaction-count": 1000000,
+        "random-generation": {
+            "languages": [
+                "Python",
+                "TypeScript",
+                "JavaScript",
+                "Java",
+                "C++",
+                "C#",
+                "Ruby",
+                "Go",
+                "Swift",
+                "Kotlin",
+                "PHP",
+                "Rust"
+            ],
+            "interests": [
+                "Algorithms",
+                "Data Science",
+                "Computer Science",
+                "Machine Learning",
+                "Deep Learning",
+                "Web Development",
+                "Mobile Development",
+                "Game Development",
+                "Cybersecurity",
+                "Cloud Computing",
+                "DevOps",
+                "AI",
+                "Blockchain",
+                "IoT",
+                "AR/VR",
+                "Big Data",
+                "Quantum Computing",
+                "Networking",
+                "Databases",
+                "UI/UX"
+            ],
+            "countries": [
+                "Spain",
+                "USA",
+                "Germany",
+                "India",
+                "Canada",
+                "Brazil",
+                "Australia",
+                "Japan",
+                "France",
+                "Italy"
+            ],
+            "age": {
+                "min": 18,
+                "max": 65
+            }
+        }
+    }
+}

@@ -9,6 +9,7 @@ Author:
 
 import os
 import sys
+import json
 
 # Ensure that the Python version is 3.10 or higher:
 if sys.version_info.major > 3 and sys.version_info.minor >= 10:
@@ -40,12 +41,22 @@ if not (os.path.exists("app") and os.path.isdir("app")):
 os.makedirs("data/simulated-db", exist_ok=True)
 os.makedirs("data/simulated-cache", exist_ok=True)
 
+# Load configuration:
+try:
+    with open("setup/config.json", mode="r", encoding="utf-8") as file:
+        config = json.load(file)
+except FileNotFoundError:
+    print("Configuration file not found.")
+    exit(1)
+
 # Set up the database:
-from setup_profiles_table import run as setup_profiles_table
 from setup_repositories_table import run as setup_repositories_table
+from setup_profiles_table import run as setup_profiles_table
+from setup_interactions_table import run as setup_interactions_table
 
 print("Setting up the database...")
-setup_profiles_table()
 setup_repositories_table()
+setup_profiles_table(config)
+setup_interactions_table(config)
 
 print("Setup complete.")

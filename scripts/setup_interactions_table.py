@@ -9,11 +9,11 @@ Author:
 
 import random
 import pandas as pd
-import os
 from datetime import datetime, timedelta
+from typing import Any
 
 
-def run(config: dict[str, dict[str, int]]) -> None:
+def run(config: dict[str, Any]) -> None:
     """Perform module tasks."""
     # Read profiles and repositories tables:
     print("Reading profiles and repositories tables...")
