@@ -6,8 +6,8 @@
     "fastapi-dev": "python -m uvicorn api.index:app --reload",
     "next-dev": "next dev --turbo",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
-    "setup:npm": "npm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python scripts/setup.py",
-    "setup:pnpm": "pnpm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python scripts/setup.py",
+    "setup:npm": "npm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python setup/setup.py",
+    "setup:pnpm": "pnpm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python setup/setup.py",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
