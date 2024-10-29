@@ -78,4 +78,4 @@ Este comando ejecutará ambos sistemas de backend y permitirá acceder a la apli
 
 ## Licencia
 
-El proyecto está licenciado bajo la [licencia MIT](./LICENSE).
+El proyecto está licenciado bajo la [licencia GNU Affero General Public License v3.0](./LICENSE).
