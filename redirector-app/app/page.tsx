@@ -37,6 +37,8 @@ export default async function Page() {
             {siteConfig.url}
           </a>
         </h2>
+
+        <span className="text-danger-500">Error: {request.statusText}</span>
       </div>
     );
   }
