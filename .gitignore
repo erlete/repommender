@@ -1,6 +1,39 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 /data/simulated-*
+/redirector-app/node_modules
+/redirector-app/.next
+/redirector-app/.env*
+/redirector-app/.vercel
+/redirector-app/.pnp
+/redirector-app/.pnp.js
+/redirector-app/.DS_Store
+/redirector-app/.coverage
+/redirector-app/coverage
+/redirector-app/build
+/redirector-app/out
+/redirector-app/next-env.d.ts
+/redirector-app/*.tsbuildinfo
+/redirector-app/.tox
+/redirector-app/.nox
+/redirector-app/.pytest_cache
+/redirector-app/.hypothesis
+/redirector-app/.pybuilder
+/redirector-app/.pyrightconfig.json
+/redirector-app/.mypy_cache
+/redirector-app/.dmypy.json
+/redirector-app/dmypy.json
+/redirector-app/.pyre
+/redirector-app/.pytype
+/redirector-app/.cython_debug
+/redirector-app/.spyderproject
+/redirector-app/.spyproject
+/redirector-app/.ropeproject
+/redirector-app/.site
+/redirector-app/.env
+/redirector-app/.venv
+/redirector-app/env
+/redirector-app/venv
 
 # dependencies
 /node_modules
