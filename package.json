@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "python -m uvicorn api.index:app --reload",
-    "next-dev:turbo": "next dev --turbo",
-    "next-dev": "next dev",
+    "build": "next build",
     "dev:turbo": "concurrently \"npm run next-dev:turbo\" \"npm run fastapi-dev\"",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "fastapi-dev": "python -m uvicorn api.index:app --reload",
+    "lint": "next lint",
+    "next-dev:turbo": "next dev --turbo",
+    "next-dev": "next dev",
     "setup:npm": "npm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python setup/setup.py",
     "setup:pnpm": "pnpm install && python -m pip install -r requirements.txt -r requirements-dev.txt && python setup/setup.py",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "tunnel": "ngrok http --url=clearly-darling-seagull.ngrok-free.app http://localhost:3000"
   },
   "dependencies": {
     "@nextui-org/autocomplete": "^2.1.7",
