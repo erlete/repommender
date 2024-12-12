@@ -48,4 +48,4 @@ def get_similar_users(
         similar_users_with_similarity.index
     ].values
 
-    return similar_users_with_similarity["username"].tolist()
+    return similar_users_with_similarity.index.tolist()

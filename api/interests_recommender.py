@@ -60,7 +60,7 @@ def get_interesting_repositories(user_indices: list[int]) -> list[int]:
     repositories_df = pd.read_csv("data/simulated-db/repositories-table.csv")
 
     # Get the top 10 repositories based on the interest score
-    top_repositories = new_table.head(10)
+    top_repositories = new_table.head(20)
 
     # Retrieve the indices of these repositories in the repositories table
     top_repository_indices = repositories_df[
