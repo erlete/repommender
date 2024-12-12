@@ -36,7 +36,7 @@ export default function Error({
       </h2>
       <Button
         variant="ghost"
-        onClick={
+        onPress={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }

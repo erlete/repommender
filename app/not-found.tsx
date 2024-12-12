@@ -22,7 +22,7 @@ export default function Page() {
       <h2 className="text-center text-2xl font-semibold">
         No hemos podido encontrar la página que estás buscando.
       </h2>
-      <Button variant="ghost" onClick={() => window.history.back()}>
+      <Button variant="ghost" onPress={() => window.history.back()}>
         Volver a la página anterior
       </Button>
     </div>
