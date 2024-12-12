@@ -12,6 +12,7 @@ import { RepositoryCardLanguage } from "@/components/repository-card";
 import { REPOSITORIES } from "@/data/repos";
 import { LANGUAGES } from "@/data/repos";
 import { getLanguageLogo } from "@/data/language-styles";
+import { MassRecommendationsComponent } from "@/components/mass-recommendations";
 
 export default function Home() {
   const [clickCount, setClickCount] = useState(0);
@@ -19,6 +20,8 @@ export default function Home() {
 
   return (
     <section className="place-self-center flex flex-col items-center justify-center gap-4 py-8 md:py-10 max-w-4xl">
+      <MassRecommendationsComponent />
+
       <div className="inline-block max-w-xl text-center justify-center">
         <h1 className={title()}>Encuentra el</h1>
         <br />
@@ -41,8 +44,7 @@ export default function Home() {
             radius: "full",
             variant: "shadow",
           })}
-          onClick={(e) => {
-            e.preventDefault();
+          onPress={() => {
             document.querySelector("#popular-repos")?.scrollIntoView({
               behavior: "smooth",
               block: "nearest",
