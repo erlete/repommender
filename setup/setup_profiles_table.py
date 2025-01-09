@@ -54,8 +54,8 @@ def run(config: dict[str, Any]) -> None:
                 random.sample(
                     languages,
                     k=random.randint(
-                        2,
-                        int(len(languages) * 0.75),
+                        int(len(languages) * 0.1),
+                        int(len(languages) * 0.5),
                     ),
                 )
                 for _ in range(count)
@@ -64,8 +64,8 @@ def run(config: dict[str, Any]) -> None:
                 random.sample(
                     interests,
                     k=random.randint(
-                        5,
-                        int(len(interests) * 0.75),
+                        int(len(languages) * 0.1),
+                        int(len(interests) * 0.5),
                     ),
                 )
                 for _ in range(count)
