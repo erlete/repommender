@@ -28,6 +28,7 @@
     "@nextui-org/link": "2.2.5",
     "@nextui-org/listbox": "2.3.7",
     "@nextui-org/navbar": "2.2.5",
+    "@nextui-org/react": "^2.6.11",
     "@nextui-org/select": "^2.4.7",
     "@nextui-org/snippet": "2.2.8",
     "@nextui-org/spinner": "^2.2.4",

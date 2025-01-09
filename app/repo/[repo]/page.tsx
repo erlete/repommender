@@ -9,6 +9,9 @@ import { Image } from "@nextui-org/image";
 import { Divider } from "@nextui-org/divider";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useMount } from "react-use";
+import { Button } from "@nextui-org/button";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+import clsx from "clsx";
 
 import { REPOSITORIES } from "@/data/repos";
 import { subtitle, title } from "@/components/primitives";
@@ -55,9 +58,17 @@ export default function Page({ params }: { params: { repo: string } }) {
       });
 
     // Fetch content recommendations:
-    fetch(
-      `/api/fastapi/get-recommended-repositories?content=${selectedRepo.name}`
-    )
+    fetch(`/api/fastapi/recommendations/get-similar-repositories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: "sample-token",
+        count: 15,
+        repository_id: params.repo as unknown as number,
+      }),
+    })
       .then(async (response) => {
         const body = await response.json();
 
@@ -104,6 +115,7 @@ export default function Page({ params }: { params: { repo: string } }) {
   const updateClassName = getUpdateClassName(selectedRepo.updatedAt);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [like, setLike] = useState(0);
 
   return (
     <section className="flex flex-col items-center justify-center gap-4">
@@ -143,6 +155,32 @@ export default function Page({ params }: { params: { repo: string } }) {
               </h2>
 
               <span className="italic">{selectedRepo.description}</span>
+              <span className="flex gap-2 items-center justify-evenly mt-2">
+                <Button
+                  isIconOnly
+                  startContent={
+                    <ThumbsUp
+                      className={clsx(
+                        "fill-none",
+                        like === 1 && "fill-success-600"
+                      )}
+                    />
+                  }
+                  onPress={() => setLike(like === 1 ? 0 : 1)}
+                />
+                <Button
+                  isIconOnly
+                  startContent={
+                    <ThumbsDown
+                      className={clsx(
+                        "fill-none",
+                        like === -1 && "fill-danger-600"
+                      )}
+                    />
+                  }
+                  onPress={() => setLike(like === -1 ? 0 : -1)}
+                />
+              </span>
             </div>
 
             <div className="flex items-center justify-evenly col-span-1 p-4">

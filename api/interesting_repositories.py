@@ -1,7 +1,26 @@
+"""Interesting repositories recommendation system definition module.
+
+Author:
+    Paulo Sanchez (@erlete)
+"""
+
 import pandas as pd
 
 
-def get_interesting_repositories(user_indices: list[int]) -> list[int]:
+def get_interesting_repositories(user_indices: list[int], count: int) -> list[int]:
+    """Get `count` interesting repositories for a list of users.
+
+    This function retrieves the `count` most interesting repositories for a
+    list of users based on their interactions. This is meant to be used after
+    retrieving similar users to a given user.
+
+    Args:
+        user_indices (list[int]): The indices of the users to get repositories for.
+        count (int): The number of interesting repositories to retrieve.
+
+    Returns:
+        list[int]: The indices of the `count` most interesting repositories.
+    """
     # Load the profiles table
     profiles_df = pd.read_csv("data/simulated-db/profiles-table.csv")
 
@@ -49,18 +68,14 @@ def get_interesting_repositories(user_indices: list[int]) -> list[int]:
     # Drop the occurrences column as it's no longer needed
     new_table = new_table.drop(columns=["occurrences"])
 
-    print(new_table)
-
     # Sort the new_table by the interest score in descending order
     new_table = new_table.sort_values(by="interest", ascending=False)
-
-    print(new_table)
 
     # Load the repositories table
     repositories_df = pd.read_csv("data/simulated-db/repositories-table.csv")
 
     # Get the top 10 repositories based on the interest score
-    top_repositories = new_table.head(20)
+    top_repositories = new_table.head(count)
 
     # Retrieve the indices of these repositories in the repositories table
     top_repository_indices = repositories_df[
