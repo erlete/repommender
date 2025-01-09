@@ -28,29 +28,38 @@ export function MassRecommendationsComponent() {
     ) as SignupFormDataProps;
 
     async function fetchSimilarUsers() {
-      const response = await fetch("/api/fastapi/get-similar-users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          languages: simulatedUser.languages,
-          interests: simulatedUser.interests,
-          country: simulatedUser.country,
-          age: simulatedUser.age,
-        }),
-      });
-
-      const userIds = (await response.json()).items;
-
-      const repoResponse = await fetch(
-        "/api/fastapi/get-interesting-repositories",
+      const response = await fetch(
+        "/api/fastapi/recommendations/get-similar-users",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ user_indices: userIds }),
+          body: JSON.stringify({
+            token: "sample-token",
+            count: 15,
+            languages: simulatedUser.languages,
+            interests: simulatedUser.interests,
+            country: simulatedUser.country,
+            age: simulatedUser.age,
+          }),
+        }
+      );
+
+      const userIds = (await response.json()).items;
+
+      const repoResponse = await fetch(
+        "/api/fastapi/recommendations/get-interesting-repositories",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: "sample-token",
+            user_ids: userIds,
+            count: 15,
+          }),
         }
       );
 

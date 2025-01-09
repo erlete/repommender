@@ -58,9 +58,17 @@ export default function Page({ params }: { params: { repo: string } }) {
       });
 
     // Fetch content recommendations:
-    fetch(
-      `/api/fastapi/get-recommended-repositories?content=${selectedRepo.name}`
-    )
+    fetch(`/api/fastapi/recommendations/get-similar-repositories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: "sample-token",
+        count: 15,
+        repository_id: params.repo as unknown as number,
+      }),
+    })
       .then(async (response) => {
         const body = await response.json();
 
