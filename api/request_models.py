@@ -114,3 +114,16 @@ class InterestingRepositoriesRequest(
     """
 
     user_ids: list[int] = Field(..., description="List of user IDs.")
+
+
+class RepositoryDataRequest(AuthenticatedRequestModel):
+    """Repository data request model.
+
+    This request model is used to request the data of a repository with ID
+    `repository_id`.
+
+    Args:
+        repository_id (int): Repository ID.
+    """
+
+    repository_id: int = Field(..., description="Repository ID.")

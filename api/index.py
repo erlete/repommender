@@ -11,12 +11,14 @@ import random
 import string
 from fastapi import FastAPI
 
+from api.data import get_repository_info, get_repository_summary
 from api.interesting_repositories import get_interesting_repositories
 from api.popular_repositories import get_popular_repositories
 from api.request_models import (
     AuthenticatedRequestModel,
     InterestingRepositoriesRequest,
     PopularRepositoriesRequest,
+    RepositoryDataRequest,
     SimilarRepositoriesRequest,
     SimilarUsersRequest,
     TokenRequest,
@@ -120,5 +122,31 @@ def get_interesting_repositories_ep(request: InterestingRepositoriesRequest):
     """
     try:
         return {"items": get_interesting_repositories(request.user_ids, request.count)}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/api/fastapi/data/get-repository-summary")
+def get_repository_summary_ep(request: RepositoryDataRequest):
+    """Get repository summary endpoint.
+
+    Args:
+        request (RepositoryDataRequest): The request model.
+    """
+    try:
+        return {"data": get_repository_summary(request.repository_id)}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/api/fastapi/data/get-repository-info")
+def get_repository_info_ep(request: RepositoryDataRequest):
+    """Get repository info endpoint.
+
+    Args:
+        request (RepositoryDataRequest): The request model.
+    """
+    try:
+        return {"data": get_repository_info(request.repository_id)}
     except Exception as e:
         return {"error": str(e)}
