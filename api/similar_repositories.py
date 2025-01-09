@@ -1,32 +1,44 @@
+"""Similar repositories recommendation system definition module.
+
+Author:
+    Paulo Sanchez (@erlete)
+"""
+
 import os
 import pickle
 
-import nltk
 import pandas as pd
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import pairwise_distances
 
-nltk.download("punkt", quiet=True)
-nltk.download("punkt_tab", quiet=True)
-nltk.download("stopwords", quiet=True)
-
-INPUT_FILE = "./data/simulated-db/repositories-table.csv"
-PREPROCESS_CACHE_FILE = f"./data/simulated-cache/repositories-table-preprocessed.pkl"
-REVALIDATE = False
-STOPS = set(stopwords.words("english"))
-PORTER_STEMMER = PorterStemmer()
+from api.config import (
+    INPUT_FILE,
+    PORTER_STEMMER,
+    PREPROCESS_CACHE_FILE,
+    REVALIDATE,
+    STOPS,
+)
 
 
-def get_repository_recommendations(content: str):
+def get_similar_repositories(repository_id: int, count: int) -> list[int]:
+    """Get `count` similar repositories to one with ID `repository_id`.
+
+    Args:
+        repository_id (int): Repository ID.
+        count (int): Number of repositories to return.
+
+    Returns:
+        list[int]: List of similar repository IDs.
+    """
     ORIGINAL_DATA = pd.read_csv(INPUT_FILE)
     ORIGINAL_DATA = ORIGINAL_DATA.dropna(subset=["name", "description"])
 
-    if content not in ORIGINAL_DATA["name"].values:
+    # Fail safe in case the repository_id is out of bounds:
+    if not 0 <= repository_id < len(ORIGINAL_DATA):
         return []
 
+    # Data preprocessing (stemming, tokenization, stop words removal):
     if os.path.exists(PREPROCESS_CACHE_FILE) and not REVALIDATE:
         with open(PREPROCESS_CACHE_FILE, "rb") as f:
             preprocessed_text = pickle.load(f)
@@ -55,7 +67,7 @@ def get_repository_recommendations(content: str):
         preprocessed_data["processed_text"]
     )
 
-    # Fit the TF-IDF model and transform the data
+    # Fit the TF-IDF model and transform the data:
     bag_of_words_model = TfidfVectorizer()
     bag_of_words_model.fit(preprocessed_data["processed_text"])
     texts_bag_of_words = bag_of_words_model.transform(
@@ -66,17 +78,9 @@ def get_repository_recommendations(content: str):
         texts_bag_of_words, texts_bag_of_words, metric="cosine"
     )
 
-    searchTitle = content  # Película base para las recomendaciones
-    indexOfTitle = preprocessed_data[
-        preprocessed_data["name"] == searchTitle
-    ].index.values[0]
-
-    distance_scores = list(enumerate(distance_matrix[indexOfTitle]))
-
+    distance_scores = list(enumerate(distance_matrix[repository_id]))
     ordered_scores = sorted(distance_scores, key=lambda x: x[1])
-
-    top_scores = ordered_scores[1:11]
-
+    top_scores = ordered_scores[1 : count + 1]
     top_indexes = [i[0] for i in top_scores]
 
     return preprocessed_data.index[top_indexes].tolist()
