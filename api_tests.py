@@ -19,6 +19,7 @@ Autor:
 import subprocess
 import json
 from time import sleep
+from typing import Any
 import requests
 from colorama import init, Fore, Style
 import platform
@@ -90,13 +91,13 @@ ENDPOINTS = {
         "body": {
             "token": {"type": "string", "example": "68gad5a69f7jl"},
             "count": {"type": "int", "example": 10},
-            "language": {"type": "list[string]", "example": ["Python", "TypeScript"]},
+            "languages": {"type": "list[string]", "example": ["Python", "TypeScript"]},
             "interests": {
                 "type": "list[string]",
                 "example": ["Machine Learning", "Data Science"],
             },
             "age": {"type": "int", "example": 32},
-            "location": {"type": "string", "example": "Madrid"},
+            "country": {"type": "string", "example": "Spain"},
         },
         "response": {
             "users": {"type": "list", "description": "Lista de usuarios similares"}
@@ -109,6 +110,7 @@ ENDPOINTS = {
         "body": {
             "token": {"type": "string", "example": "68gad5a69f7jl"},
             "count": {"type": "int", "example": 10},
+            "user_ids": {"type": "list[int]", "example": [123, 456]},
         },
         "response": {
             "repositories": {
@@ -183,18 +185,37 @@ def display_menu():
     )
 
 
-def get_user_input(prompt, default=None):
+def get_user_input(prompt, type, default=None) -> Any:
     """Recibe una entrada del usuario.
 
     Args:
         prompt (str): El mensaje de solicitud de entrada.
+        type (str): El tipo de dato esperado.
         default (str): El valor por defecto si no se introduce nada.
 
     Returns:
         str: La entrada del usuario.
     """
     user_input = input(prompt)
-    return user_input if user_input else default
+
+    match type:
+        case "int":
+            return int(user_input) if user_input.isdigit() else default
+        case "list[int]":
+            out = [int(value.strip()) for value in user_input.strip("[]").split(",")]
+            return out if out else default
+        case "list[string]":
+            out = [
+                value.strip().strip("\"'")
+                for value in user_input.strip("[]").split(",")
+            ]
+            return out if out else default
+        case "string":
+            return user_input.strip() if user_input else default
+        case "string | None":
+            return user_input.strip() if user_input else None
+        case _:
+            return default
 
 
 def main():
@@ -206,13 +227,9 @@ def main():
             print()
 
             display_menu()
-            user_input = get_user_input("\n> Introduce tu seleccion: ")
+            user_input = get_user_input("\n> Introduce tu seleccion: ", "int")
 
-            if (
-                user_input is None
-                or not user_input.isdigit()
-                or not 1 <= int(user_input) < len(ENDPOINTS) + 2
-            ):
+            if user_input is None or not 1 <= user_input < len(ENDPOINTS) + 2:
                 print(
                     Fore.RED + "Seleccion invalida. Intentalo de nuevo.",
                     Style.RESET_ALL,
@@ -249,6 +266,7 @@ def main():
             for key, value in details["body"].items():
                 body[key] = get_user_input(
                     f'>> Introduce el valor para "{key}" ({value["type"]}, ej: {value["example"]}): ',
+                    value["type"],
                     None,
                 )
 
