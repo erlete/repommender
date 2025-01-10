@@ -41,6 +41,9 @@ python api_tests.py
 
 Este script ([`api_tests.py`](./api_tests.py)) se encargará del proceso completo de inicialización y terminación del servidor backend, así como de la ejecución de una interfaz por línea de comandos interactiva que te permitirá probar cada uno de los endpoints, pudiendo ver su información asociada, estructura de petición, estructura de respuesta y respuesta del servidor, respectivamente.
 
+> [!NOTE]
+> Todas las entradas de la interfaz llevan un ejemplo asociado para poder tener unos valores de referencia. En caso de variar estos valores, para ciertos campos, por ejemplo, para el campo `languages` del endpoint `get-similar-users`, habría que prestar atención a los valores posibles para cada campo, especificados en [`setup/config.json`](./setup/config.json).
+
 ## 4. Puesta en marcha del servicio completo (opcional)
 
 Para llevar a cabo la puesta en marcha del servicio completo (frontend y backend), será necesario tener instalado Node.js 21+ y un gestor de paquetes del mismo (`npm`, `pnpm`, etc.). Tras verificar la instalación, se procederá a ejecutar los siguientes comandos:
